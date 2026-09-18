@@ -10,7 +10,7 @@ import { clerkMiddleware } from "@clerk/express";
 import { clerkWebhookHandler } from "./webhooks/clerk";
 // import { polarWebhookHandler } from "./webhooks/polar";
 import { getEnv } from "./lib/env";
-// import keepAliveCron from "./lib/cron";
+import keepAliveCron from "./lib/cron";
 
 // import productRouter from "./routes/productRouter";
 // import meRouter from "./routes/meRouter";
@@ -40,6 +40,7 @@ app.post("/webhooks/clerk", rawJson, (req, res) => {
 app.use(express.json());
 app.use(cors());
 app.use(clerkMiddleware());
+ 
 
 
 // Health check endpoint
@@ -71,4 +72,8 @@ if (fs.existsSync(publicDir)) {
 const PORT = env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-});
+  if (env.NODE_ENV ==="production") {
+    
+  
+  keepAliveCron.start()
+}});
