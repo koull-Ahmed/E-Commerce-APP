@@ -70,7 +70,7 @@ try {
 if (evt.type ==="user.deleted") {
     const id = evt.data.id
     if (id) {
-        await db.deleted(users).where(eq(users.clerkUserId,id));
+        await db.delete(users).where(eq(users.clerkUserId,id));
     }
 
 }
